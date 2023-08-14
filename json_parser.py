@@ -113,7 +113,7 @@ def parse_number(string:str):
     global current
     global previous
     length = len(string)
-    while string[current].isdigit():
+    while current < length and string[current].isdigit():
         current += 1
     
     if(peek(string, '.')):
@@ -191,21 +191,5 @@ def parse_members(string: str):
     return members
 
 if __name__ == "__main__":
-    example = """{
-    "person"   :  {
-        "first_name"  :
-        
-        "李",
-        
-        "last_name":       "四",
-        "address"    : {
-            "street"  : "长安街",
-            "city"  :
-            
-            "北京",
-            
-            "country"   : "中国"
-        }
-    }
-}"""
+    example = '123'
 print(json_parser(example))
