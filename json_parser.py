@@ -12,6 +12,8 @@ def parse_value(string:str):
     global previous
     skip_whitespace(string)
     value = None
+    if current == len(string):
+        return None
     match(string[current]):
         case '"':
             value = parse_string(string)
@@ -191,5 +193,5 @@ def parse_members(string: str):
     return members
 
 if __name__ == "__main__":
-    example = '123'
+    example = ' '
 print(json_parser(example))
