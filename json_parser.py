@@ -1,10 +1,8 @@
+import os
 current = 0
 previous = 0
 
 def json_parser(string:str):
-    return parse_element(string)
-
-def parse_element(string:str):
     return parse_value(string)
 
 def parse_value(string:str):
@@ -115,7 +113,12 @@ def parse_number(string:str):
     global current
     global previous
     length = len(string)
-    while current < length and string[current].isdigit():
+    sign_flag = False
+
+    if match(string, '-'):
+        sign_flag = True
+
+    while current < length and (string[current].isdigit() ):
         current += 1
     
     if(peek(string, '.')):
@@ -134,6 +137,9 @@ def parse_number(string:str):
         exp = int(string[previous:current])
         num = num * (10 ** exp)
         previous = current
+    
+    if sign_flag:
+        num = -num
     return num
 
 
@@ -192,6 +198,14 @@ def parse_members(string: str):
         skip_whitespace(string)
     return members
 
+# print(json_parser('[-1e+9999]'))
+
 if __name__ == "__main__":
-    example = ' '
-print(json_parser(example))
+    file_list = os.listdir('tests')
+    for file in file_list:
+        if file.startswith('y'):
+            with open('tests/'+file, 'r') as f:
+                example = f.read()
+                print(example)
+                current = previous = 0
+                print(json_parser(example))
